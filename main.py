@@ -15,4 +15,4 @@ def main(page: ft.Page):
 
 
 
-ft.app(target=main, view=ft.WEB_BROWSER) #type: ignore
+ft.app(target=main) #type: ignore
