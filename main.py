@@ -4,7 +4,7 @@ from datetime import datetime
 
 def main(page: ft.Page):
     page.title = "Мое первое приложение"
-    page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme_mode = ft.ThemeMode.DARK
     greeting_text = ft.Text("Hello world!")
     greeting_history = []
     history_text = ft.Text("История приветствий")
@@ -55,14 +55,26 @@ def main(page: ft.Page):
             page.theme_mode = ft.ThemeMode.LIGHT
         page.update()
 
+    def delete_hostory(_):
+        greeting_history.clear()
+        history_text.value = "История привествий"
+        page.update()
+
+    def delete_lust(_):
+        del greeting_history[-1]
+        history_text.value = "История приветствий \n" + "\n".join(greeting_history)
+        page.update()
+
+
+    # КНОПКИ
     name_input = ft.TextField(label="Введите имя", on_submit=on_button_click)
     age_input = ft.TextField(label="Введите возраст", on_submit=on_button_click)
-    theme_button = ft.IconButton(icon=ft.Icons.BRIGHTNESS_7, on_click=on_theme_click)
+    theme_button = ft.IconButton(icon=ft.Icons.BRIGHTNESS_6, on_click=on_theme_click)
     name_button = ft.ElevatedButton("send", icon=ft.Icons.SEND, on_click=on_button_click)
-    # name_button_text = ft.TextButton("send")
-    # name_button_icon = ft.IconButton(icon=ft.Icons.SEND)
+    delete_history_button =  ft.IconButton(icon=ft.Icons.DELETE, on_click=delete_hostory)
+    delete_button = ft.ElevatedButton("delete lust", on_click=delete_lust)
 
-    page.add(greeting_text, name_input, age_input, name_button, theme_button, history_text) # name_button_text, name_button_icon
+    page.add(greeting_text, name_input, age_input, name_button, theme_button, delete_history_button, delete_button, history_text) # name_button_text, name_button_icon
 
 try:
     ft.app(target=main) #type: ignore
